@@ -23,7 +23,6 @@ export const TaskList = () => {
   const status = useSelector(getStatus)
 
   const filteredTasks = visibleTask(tasks, status)
-  
 
   return (
     <ul className={css.list}>

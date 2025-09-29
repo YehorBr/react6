@@ -1,8 +1,7 @@
 import { MdClose } from "react-icons/md";
 import css from "./Task.module.css";
 import { useDispatch } from "react-redux";
-import { deleteTasks } from "../../redux/action";
-import { switchTask } from "../../redux/action";
+import { deleteTasks, switchTasks } from "../../redux/TaskSlice";
 
 export const Task = ({ task }) => {
 
@@ -14,7 +13,7 @@ export const Task = ({ task }) => {
   }
 
   const onSwitch = () =>{
-    dispatch(switchTask(task.id))
+    dispatch(switchTasks(task.id))
   }
 
 

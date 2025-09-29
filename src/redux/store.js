@@ -1,22 +1,35 @@
-import { devToolsEnhancer } from "@redux-devtools/extension";
-import { legacy_createStore as createStore } from "redux";
-import { rootReducer } from "./reducer";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { taskReducer } from "./TaskSlice";
+import { filterReducer } from "./FilterSlice";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from 'redux-persist/lib/storage'
+import {
+  FLUSH, PAUSE,
+  PERSIST,   PURGE,
+  REGISTER, REHYDRATE
+} from 'redux-persist';
 
 
-export const initialState = {
- tasks: [
-   { id: 0, text: "Learn HTML and CSS", completed: true },
-   { id: 1, text: "Get good at JavaScript", completed: true },
-   { id: 2, text: "Master React", completed: false },
-   { id: 3, text: "Discover Redux", completed: false },
-   { id: 4, text: "Build amazing apps", completed: false },
- ],
- filters: {
-   status: "All",
- },
-};
 
+const persistConfig = {
+  key: "root",
+  storage,
+}
 
-const enhanser = devToolsEnhancer()
+const reducers = combineReducers({
+  tasks: taskReducer,
+  filters: filterReducer,
+})
 
-export const store  = createStore(rootReducer, enhanser)
+const persistedReducer = persistReducer(persistConfig, reducers)
+
+export const store = configureStore({
+  reducer:  persistedReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+    }
+  })
+});
+
+export const persistor = persistStore(store)
