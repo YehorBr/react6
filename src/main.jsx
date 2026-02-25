@@ -1,9 +1,13 @@
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { App } from "./App";
-// import { App } from "./Layout";
-// import { App } from "./Parameters";
-// import { App } from "./Practice/app";
-// import { App } from "./Practice/router"; 
 import "./index.css";
+import { store } from "./redux/store";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
