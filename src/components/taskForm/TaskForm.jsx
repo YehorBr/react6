@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { Button } from "../Button/Button";
 import css from "./TaskForm.module.css";
-import {addTasks} from "../../redux/TaskSlice"
+import { addTask } from "../../redux/operation";
+
 
 export const TaskForm = () => {
     const dispatch = useDispatch()
@@ -11,12 +12,10 @@ export const TaskForm = () => {
     const form = event.target;
 
     const newTask = {
-        id: Date.now(),
         text: form.elements.text.value,
-        completed: false,
     };
 
-    dispatch(addTasks(newTask))
+    dispatch(addTask(newTask))
 
     form.reset();
   };
